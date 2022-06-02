@@ -12,6 +12,9 @@ const main = async () => {
 
   await transaction.wait(1);
   console.log("Funded!");
+
+  await fundMe.withdraw();
+  console.log("Withdraw all money");
 };
 
 main()

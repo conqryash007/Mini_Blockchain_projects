@@ -53,7 +53,7 @@ const { developmentChains } = require("../../helper-hardhat-config");
         beforeEach(async () => {
           await fundMe.fund({ value: sendValue });
 
-          console.log(`FundMe contract address `, fundMe.address);
+          // console.log(`FundMe contract address `, fundMe.address);
         });
         it("withdraws ETH from a single funder", async () => {
           // Arrange
@@ -90,6 +90,9 @@ const { developmentChains } = require("../../helper-hardhat-config");
         it("is allows us to withdraw with multiple funders", async () => {
           // Arrange
           const accounts = await ethers.getSigners();
+          // const account = await ethers.getSigner(accounts[0].address);
+          // console.log(account);
+          // console.log("-----------------------");
           for (i = 1; i < 6; i++) {
             const fundMeConnectedContract = await fundMe.connect(accounts[i]);
 
