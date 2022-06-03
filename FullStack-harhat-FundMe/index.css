@@ -1,0 +1,7 @@
+button {
+  display: flex;
+  flex-direction: column;
+  -ms-flex-item-align: center;
+  height: 5vh;
+  font-size: 2vw;
+}
