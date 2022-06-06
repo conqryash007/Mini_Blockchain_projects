@@ -1,10 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+// IMPORT
+import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
+
 // ERROR
 error Raffle_notEnoughEth();
 
-contract Raffle {
+contract Raffle is VRFConsumerBaseV2 {
+    VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
+
     // STATE VARIABLE
 
     uint256 private immutable i_entranceFee;
@@ -12,7 +18,8 @@ contract Raffle {
 
     // CONSTRUCTOR
 
-    constructor(uint256 entranceFee) {
+    constructor(address VrfCordinator, uint256 entranceFee) VRFConsumerBaseV2(VrfCordinator) {
+        i_vrfCoordinator = VRFCoordinatorV2Interface(VrfCordinator);
         i_entranceFee = entranceFee;
     }
 
@@ -29,6 +36,21 @@ contract Raffle {
 
         emit RaffleEnter(msg.sender);
     }
+
+    function getRandomWinner() external {
+        i_vrfCoordinator.requestRandomWords(
+            keyHash,
+            s_subscriptionId,
+            requestConfirmations,
+            callbackGasLimit,
+            numWords
+        );
+    }
+
+    function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords)
+        internal
+        override
+    {}
 
     // GETTER FUNCTION
     function getEntranceFee() public view returns (uint256) {

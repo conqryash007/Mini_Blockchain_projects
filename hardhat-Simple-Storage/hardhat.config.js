@@ -43,7 +43,7 @@ module.exports = {
     outputFile: "gas-report.txt",
     noColors: true,
     coinmarketcap: COINMARKETCAP_API_KEY,
-    token: "MATIC",
+    // token: "MATIC",
   },
   solidity: "0.8.7",
 };
